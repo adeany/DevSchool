@@ -59,6 +59,7 @@ function submitLocation() {
    var address = document.getElementById('autocomplete').value;
    console.log('address is ' + address);
    resetForm();
+}
 
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
