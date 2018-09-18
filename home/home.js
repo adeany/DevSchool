@@ -18,16 +18,15 @@ var componentForm = {
 
 function initGoogle() {
     initMap();
-
     initAutocomplete();
 }
+
 function initAutocomplete() {
     // Create the autocomplete object, restricting the search to geographical
     // location types.
     autocomplete = new google.maps.places.Autocomplete(
             /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
         { types: ['geocode'] });
-
 }
 
 // Bias the autocomplete object to the user's geographical location,
@@ -46,6 +45,20 @@ function geolocate() {
             autocomplete.setBounds(circle.getBounds());
         });
     }
+}
+
+function addQuestion() {
+
+}
+
+function resetForm() {
+    document.getElementById('autocomplete').value = "";
+}
+
+function submitLocation() {
+   var address = document.getElementById('autocomplete').value;
+   console.log('address is ' + address);
+   resetForm();
 }
 
 function initMap() {
