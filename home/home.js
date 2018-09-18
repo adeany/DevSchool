@@ -56,9 +56,7 @@ function resetForm() {
 }
 
 function submitLocation() {
-   var address = document.getElementById('autocomplete').value;
-   console.log('address is ' + address);
-   resetForm();
+   var address = document.getElementById('autocomplete').value;   
 }
 
 function initMap() {
@@ -68,13 +66,15 @@ function initMap() {
     });
     var geocoder = new google.maps.Geocoder();
 
-    document.getElementById('submit').addEventListener('click', function () {
+    document.getElementById('submitLocation').addEventListener('click', function () {
         geocodeAddress(geocoder, map);
     });
 }
 
+// Adds new marker to map 
 function geocodeAddress(geocoder, resultsMap) {
-    var address = document.getElementById('address').value;
+    var address = document.getElementById('autocomplete').value;
+    console.log("address in geocode is: ", address); 
     geocoder.geocode({ 'address': address }, function (results, status) {
         if (status === 'OK') {
             resultsMap.setCenter(results[0].geometry.location);
@@ -82,6 +82,9 @@ function geocodeAddress(geocoder, resultsMap) {
                 map: resultsMap,
                 position: results[0].geometry.location
             });
+            var modal = document.getElementById("addModal"); 
+            resetForm();
+            modal.classList.remove("show");
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
