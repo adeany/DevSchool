@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    
+    <meta charset="utf-8">
+    <title>Custom Popups</title>
+    <link rel=stylesheet href=addLocation.css>
+    <script src="addLocation.js"></script>
 </head>
+
 <body>
-    
+    <div id="floating-panel">
+        <input id="address" type="textbox" value="Sydney, NSW">
+        <input id="submit" type="button" value="Geocode">
+    </div>
+    <div id="map"></div>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwQ2zFFbTL2MBAw7WHqju2Tkxe-CZ4sFE&callback=initMap"></script>
 </body>
+
 </html>
