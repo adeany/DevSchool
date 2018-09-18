@@ -2,9 +2,15 @@
 
 <head>
     <link rel="stylesheet" href="home.css">
+    <script src="home.js"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
+
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
 
 </head>
 
@@ -44,11 +50,17 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="form-group">
+
+                            <!-- <div id="locationField">
+                                    <input id="autocomplete" placeholder="Start typing address"
+                                           onFocus="geolocate()" type="text"></input>
+                                  </div> -->
+
+                        <div id="locationField" class="form-group">
                             <label for="inputAddress">Address</label>
-                            <input type="email" class="form-control" id="inputAddress" aria-describedby="emailHelp"
-                                placeholder="Start typing address">
-                            <small id="emailHelp" class="form-text text-muted">Location that you wish to request
+                            <input id="autocomplete" class="form-control" placeholder="Start typing address" onFocus="geolocate()"
+                                type="text" />
+                            <small id="locateHelp" class="form-text text-muted">Location that you wish to request
                                 feedback on</small>
                         </div>
 
@@ -109,6 +121,9 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwQ2zFFbTL2MBAw7WHqju2Tkxe-CZ4sFE&libraries=places&callback=initAutocomplete"
+        async defer></script>
+
 </body>
 
 </html>
