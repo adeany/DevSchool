@@ -1,3 +1,7 @@
 .fa.fa-user-circle-o {
     font-size: 150%;
 }
+
+#addButton {
+    padding: 1rem 1rem; 
+}
