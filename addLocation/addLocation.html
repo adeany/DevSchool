@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-    
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Custom Popups</title>
+    <link rel=stylesheet href=addLocation.css>
+    <script src="addLocation.js"></script>
+  </head>
+  <body>
+      <button class="btn btn-primary" type="button" onclick=addLoc()>Add Location</button>
+    <div id="map"></div>
+    <div id="content">
+      Location1
+    </div>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwQ2zFFbTL2MBAw7WHqju2Tkxe-CZ4sFE&callback=initMap">
+    </script>
+  </body>
 </html>
