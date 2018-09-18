@@ -1,9 +1,10 @@
 .container {
     position: relative; 
-    width: 40%; 
+    max-width: 30%;
     margin: auto;
     margin-top: 20%;
     height: 50%;
+    background-color: white;
 }
 
 .btns {
