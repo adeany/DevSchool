@@ -56,7 +56,7 @@ function resetForm() {
 }
 
 function submitLocation() {
-   var address = document.getElementById('autocomplete').value;   
+    var address = document.getElementById('autocomplete').value;
 }
 
 function initMap() {
@@ -74,7 +74,7 @@ function initMap() {
 // Adds new marker to map 
 function geocodeAddress(geocoder, resultsMap) {
     var address = document.getElementById('autocomplete').value;
-    console.log("address is: ", address); 
+    console.log("address is: ", address);
     geocoder.geocode({ 'address': address }, function (results, status) {
         if (status === 'OK') {
             resultsMap.setCenter(results[0].geometry.location);
@@ -83,7 +83,7 @@ function geocodeAddress(geocoder, resultsMap) {
                 position: results[0].geometry.location,
                 id: 1 // make this a unique id for every new marker 
             });
-            marker.addListener('click', function() {
+            marker.addListener('click', function () {
                 displayForm(this.id);
             });
             resetForm();
@@ -94,8 +94,17 @@ function geocodeAddress(geocoder, resultsMap) {
 }
 
 function displayForm(markerId) {
-    console.log("marker clicked: ", markerId); 
-    document.getElementById("locationSurvey").style.display = "inline"; 
-    document.getElementById("getStarted").style.display = "none"; 
+    console.log("marker clicked: ", markerId);
+    document.getElementById("getStarted").style.display = "none";
+    document.getElementById("locationSurvey").style.display = "inline";
 }
 // document.getElementById("groupSelectLabel").style.display = "none";
+
+function addComment() {
+    var node = document.createElement("P");
+    var commentText = document.getElementById("newComment").value;
+    var newComment = document.createTextNode(commentText);
+    node.appendChild(newComment);
+    document.getElementById("comments").appendChild(node);
+    document.getElementById("newComment").value = "";
+}

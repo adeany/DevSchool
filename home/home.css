@@ -42,3 +42,8 @@
     display: none;
 }
 
+.comment-btn {
+    position: absolute;
+    right: 30%;
+}
+

@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
-        <link href="https://bootswatch.com/4/flatly/bootstrap.min.css" rel="stylesheet">
+    <link href="https://bootswatch.com/4/flatly/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
 
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -33,7 +33,8 @@
                         <i class="fa fa-user-circle-o"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="../editProfile/editProfile.html">Edit Profile</a> <!-- TODO: add navigation -->
+                        <a class="dropdown-item" href="../editProfile/editProfile.html">Edit Profile</a>
+                        <!-- TODO: add navigation -->
                         <a class="dropdown-item" href="../login/login.html">Sign Out</a>
                     </div>
                 </li>
@@ -50,9 +51,19 @@
         <div class=jumbotron>
             <h3 class="display-6">Share Your Thoughts!</h3>
             <p class="lead" id=getStarted>Click on a red marker to get started.</p>
-            <p class="lead" id=locationSurvey>Survey goes here</p>
+            <div class="container" >
+                <p class="lead" id=locationSurvey>Survey question goes here</p>
+                <ul id="comments">
+                </ul>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Comment goes here..."
+                        aria-describedby="button-addon2" id="newComment">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" onclick="addComment()" type="button" id="commentBtn">Comment</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        
     </div>
 
     <!-- Modal -->
@@ -111,7 +122,8 @@
                                     <option value="4">Custom</option>
                                 </select>
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" onclick="addQuestion()" >Add Question</button>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="addQuestion()">Add
+                                        Question</button>
                                 </div>
                             </div>
                         </div>
@@ -119,7 +131,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="resetForm()" data-dismiss="modal">Cancel</button>
-                    <button type="button" type=submit class="btn btn-primary" onclick="submitLocation()" data-dismiss=modal id=submitLocation>Add Location</button>
+                    <button type="button" type=submit class="btn btn-primary" onclick="submitLocation()" data-dismiss=modal
+                        id=submitLocation>Add Location</button>
                 </div>
             </div>
         </div>
