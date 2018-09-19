@@ -47,8 +47,42 @@ function geolocate() {
     }
 }
 
-function addQuestion() {
+// changes to input text if custom question option selected
+function selectQuestion() {
+    var selector = document.getElementById('addNewQuestionButton');
+    var value = selector[selector.selectedIndex].value;
+    console.log("value: ", value)
+    if (value === "4") {
+        document.getElementById("questionsDropdown").style.display = "none";
+        document.getElementById("customQuestion").style.display = "flex";
+    }
+}
 
+// adds question to the list of selected questions 
+function addQuestionToList() {
+    var selector = document.getElementById('addNewQuestionButton');
+    var question = selector[selector.selectedIndex].innerHTML;
+    var value = selector[selector.selectedIndex].value;
+    if (value === "4") {
+        question = document.getElementById("customQuestionText").value;
+    }
+    if (value != "0") {
+        var listItem = document.createElement("LI");                 // Create a <li> node
+        var itemText = document.createTextNode(question);         // Create a text node
+        listItem.appendChild(itemText);
+        listItem.classList.add("list-group-item");                            // Append the text to <li>
+        document.getElementById("selectedQuestions").appendChild(listItem)
+        cancelCustom();
+    }
+}
+//  returns to dropdown from custom question input 
+function cancelCustom() {
+    var selector = document.getElementById('addNewQuestionButton');
+    selector.selectedIndex = 0;
+    document.getElementById("customQuestionText").value = "";
+    document.getElementById("customQuestionText").placeholder = "Type custom question here";
+    document.getElementById("questionsDropdown").style.display = "flex";
+    document.getElementById("customQuestion").style.display = "none";
 }
 
 function resetForm() {
@@ -95,9 +129,9 @@ function geocodeAddress(geocoder, resultsMap) {
 
 function displayForm(markerId) {
     console.log("marker clicked: ", markerId);
-    document.getElementById("getStarted").style.display = "none";
-    document.getElementById("locationSurvey").style.display = "inline";
     document.getElementById("markerInfo").style.visibility = "visible";
+    document.getElementById("locationSurvey").style.display = "inline";
+    document.getElementById("getStarted").style.display = "none";
 }
 // document.getElementById("groupSelectLabel").style.display = "none";
 

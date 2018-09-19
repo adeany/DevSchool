@@ -50,3 +50,11 @@
 .commentsGroup {
     margin-top: 15px;
 }
+
+#selectedQuestions {
+    margin-top: 20px; 
+}
+
+#customQuestion {
+    display: none;
+}
