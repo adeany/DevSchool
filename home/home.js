@@ -65,8 +65,6 @@ function addQuestionToList() {
     var value = selector[selector.selectedIndex].value;
     if (value === "4") {
         question = document.getElementById("customQuestionText").value;
-        document.getElementById("customQuestionText").value = "";
-        document.getElementById("customQuestionText").placeholder = "Type custom question here";
     }
     if (value != "0") {
         var listItem = document.createElement("LI");                 // Create a <li> node
@@ -81,6 +79,8 @@ function addQuestionToList() {
 function cancelCustom() {
     var selector = document.getElementById('addNewQuestionButton');
     selector.selectedIndex = 0;
+    document.getElementById("customQuestionText").value = "";
+    document.getElementById("customQuestionText").placeholder = "Type custom question here";
     document.getElementById("questionsDropdown").style.display = "flex";
     document.getElementById("customQuestion").style.display = "none";
 }
