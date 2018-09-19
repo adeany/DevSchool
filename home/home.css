@@ -42,3 +42,10 @@
     display: none;
 }
 
+#selectedQuestions {
+    margin-top: 20px; 
+}
+
+#customQuestion {
+    display: none; 
+}
