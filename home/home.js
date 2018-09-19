@@ -97,6 +97,7 @@ function displayForm(markerId) {
     console.log("marker clicked: ", markerId);
     document.getElementById("getStarted").style.display = "none";
     document.getElementById("locationSurvey").style.display = "inline";
+    document.getElementById("markerInfo").style.visibility = "visible";
 }
 // document.getElementById("groupSelectLabel").style.display = "none";
 
