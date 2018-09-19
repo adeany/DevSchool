@@ -102,10 +102,13 @@ function displayForm(markerId) {
 // document.getElementById("groupSelectLabel").style.display = "none";
 
 function addComment() {
-    var node = document.createElement("P");
     var commentText = document.getElementById("newComment").value;
-    var newComment = document.createTextNode(commentText);
-    node.appendChild(newComment);
-    document.getElementById("comments").appendChild(node);
-    document.getElementById("newComment").value = "";
+    if (commentText) {
+        var node = document.createElement("li");
+        node.classList.add('list-group-item');
+        var newComment = document.createTextNode(commentText);
+        node.appendChild(newComment);
+        document.getElementById("comments").appendChild(node);
+        document.getElementById("newComment").value = "";
+    }
 }
