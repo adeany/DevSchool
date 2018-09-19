@@ -34,3 +34,11 @@
     width: 100%;
 }
 
+#getStarted {
+    display: inline; 
+}
+
+#locationSurvey {
+    display: none;
+}
+

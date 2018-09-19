@@ -74,19 +74,28 @@ function initMap() {
 // Adds new marker to map 
 function geocodeAddress(geocoder, resultsMap) {
     var address = document.getElementById('autocomplete').value;
-    console.log("address in geocode is: ", address); 
+    console.log("address is: ", address); 
     geocoder.geocode({ 'address': address }, function (results, status) {
         if (status === 'OK') {
             resultsMap.setCenter(results[0].geometry.location);
             var marker = new google.maps.Marker({
                 map: resultsMap,
-                position: results[0].geometry.location
+                position: results[0].geometry.location,
+                id: 1 // make this a unique id for every new marker 
             });
-            var modal = document.getElementById("addModal"); 
+            marker.addListener('click', function() {
+                displayForm(this.id);
+            });
             resetForm();
-            modal.classList.remove("show");
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
     });
 }
+
+function displayForm(markerId) {
+    console.log("marker clicked: ", markerId); 
+    document.getElementById("locationSurvey").style.display = "inline"; 
+    document.getElementById("getStarted").style.display = "none"; 
+}
+// document.getElementById("groupSelectLabel").style.display = "none";
