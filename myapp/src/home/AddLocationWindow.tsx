@@ -2,7 +2,7 @@ import * as React from 'react';
 import './Home.css';
 
 interface AddLocationProps { };
-interface AddLocationState { value: string, customQuestionValue: string, showCustom: boolean };
+interface AddLocationState { dropdownValue: string, dropdownQuestion: string, customQuestionText: string, showCustom: boolean, selectedQuestions: Array<any> };
 class AddLocationWindow extends React.Component<AddLocationProps, AddLocationState> {
 
     public questionStyle = {
@@ -15,9 +15,11 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
     constructor(props: any) {
         super(props);
         this.state = {
-            value: '0',
-            customQuestionValue: "",
+            dropdownValue: '0',
+            dropdownQuestion: "",
+            customQuestionText: "",
             showCustom: false,
+            selectedQuestions: [],
         };
 
         this.submitLocation = this.submitLocation.bind(this);
@@ -33,37 +35,34 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
     }
 
     public selectQuestion = (event: any) => {
-let v = event.target.value;
-        this.setState({ value: event.target.value })
-        if (v == "4")
-        {
-            this.toggleCustom();
+        let v = event.target.value;
+        this.setState({
+            dropdownValue: event.target.value, dropdownQuestion: event.target.options[event.target.selectedIndex].text
+        })
+        if (v == "4") {
+            this.setState({ showCustom: true });
         }
-       // console.log(this.state.showCustom); 
-
-    }
-
-    public toggleCustom = () => {
-        console.log ("toggle")
-        this.setState({showCustom: !this.state.showCustom});
     }
 
     public addQuestionToList = () => {
-        // console.log('in add question function');
+        let updatedSelectedQuestions = this.state.selectedQuestions;
+        let question = this.state.dropdownQuestion;
+        if (this.state.dropdownValue === "4") {
+            question = this.state.customQuestionText;
+        }
+        if (this.state.dropdownValue != "0") {
+            updatedSelectedQuestions.push(<li key={this.state.dropdownValue} className="list-group-item">{question}</li>)
+            this.setState({ selectedQuestions: updatedSelectedQuestions })
+            this.cancelCustom();
+        }
     }
 
     public cancelCustom = () => {
-        this.toggleCustom();
-        // var selector = document.getElementById('addNewQuestionButton');
-        // selector.selectedIndex = 0;
-        // document.getElementById("customQuestionText").value = "";
-        // document.getElementById("customQuestionText").placeholder = "Type custom question here";
-        // document.getElementById("questionsDropdown").style.display = "flex";
-        // document.getElementById("customQuestion").style.display = "none";
+        this.setState({ showCustom: false, customQuestionText: "" });
     }
 
     public customQuestionChange = (event: any) => {
-        this.setState({ customQuestionValue: event.target.value });
+        this.setState({ customQuestionText: event.target.value });
     }
 
     public resetForm = () => {
@@ -94,7 +93,7 @@ let v = event.target.value;
     public renderCustomQuestion() {
         return (
             <div className="input-group" id='customQuestion'>
-                <input id='customQuestionText' value={this.state.customQuestionValue} onChange={this.customQuestionChange} className="form-control" placeholder="Type custom question here" type="text" />
+                <input id='customQuestionText' value={this.state.customQuestionText} onChange={this.customQuestionChange} className="form-control" placeholder="Type custom question here" type="text" />
                 <div className="input-group-append">
                     <button className="btn btn-outline-secondary" type="button" onClick={this.cancelCustom}>Cancel</button>
                     <button className="btn btn-outline-secondary" type="button" onClick={this.addQuestionToList}>Add</button>
@@ -150,9 +149,9 @@ let v = event.target.value;
                                         <label htmlFor="addNewQuestionButton">Additional Questions</label>
                                     </div>
                                     {!this.state.showCustom && this.renderdrop()}
-                                    {this.state.showCustom && this.renderCustomQuestion() }
+                                    {this.state.showCustom && this.renderCustomQuestion()}
                                 </div>
-                                <ul className="list-group" id='selectedQuestions' />
+                                <ul className="list-group" id='selectedQuestions'>{this.state.selectedQuestions}</ul>
                             </form>
                         </div>
                         <div className="modal-footer">
