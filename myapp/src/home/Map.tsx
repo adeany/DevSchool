@@ -3,6 +3,13 @@ import { GoogleMap, withGoogleMap } from 'react-google-maps';
 
 class Map extends React.Component {
 
+    constructor(props:any) {
+        super(props);
+    }
+
+    componentWillMount = () => {
+
+    }
 
     public render() {
 

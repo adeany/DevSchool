@@ -15,7 +15,7 @@ class LocationInfo extends React.Component {
                     id='addButton'> Add Location
         </button>
                 <div id="map"/>
-                <Map />
+                <Map /> 
                 <div className='jumbotron'>
                     <h3 className="display-6">Share Your Thoughts!</h3>
                     <p className="lead" id='getStarted'>Click on a red marker to get started.</p>
