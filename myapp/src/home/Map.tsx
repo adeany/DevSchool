@@ -7,10 +7,6 @@ class Map extends React.Component {
         super(props);
     }
 
-    componentWillMount = () => {
-
-    }
-
     public render() {
 
         const GoogleMapExample = withGoogleMap(props => (

@@ -1,17 +1,23 @@
 import * as React from 'react';
 import './Home.css';
 
-class AddLocationWindow extends React.Component {
+interface AddLocationProps { };
+interface AddLocationState { value: string, customQuestionValue: string, showCustom: boolean };
+class AddLocationWindow extends React.Component<AddLocationProps, AddLocationState> {
 
     public questionStyle = {
         marginBottom: '10px',
         marginTop: '15px',
     };
 
+    public questionsDropdown: any = React.createRef();
+
     constructor(props: any) {
         super(props);
         this.state = {
             value: '0',
+            customQuestionValue: "",
+            showCustom: false,
         };
 
         this.submitLocation = this.submitLocation.bind(this);
@@ -27,10 +33,19 @@ class AddLocationWindow extends React.Component {
     }
 
     public selectQuestion = (event: any) => {
-        if (event && event.target) {
-            this.setState({ value: event.target.value });
+let v = event.target.value;
+        this.setState({ value: event.target.value })
+        if (v == "4")
+        {
+            this.toggleCustom();
         }
-        // console.log('in submit question function');
+       // console.log(this.state.showCustom); 
+
+    }
+
+    public toggleCustom = () => {
+        console.log ("toggle")
+        this.setState({showCustom: !this.state.showCustom});
     }
 
     public addQuestionToList = () => {
@@ -38,7 +53,17 @@ class AddLocationWindow extends React.Component {
     }
 
     public cancelCustom = () => {
-        // console.log('in cancel custom function');
+        this.toggleCustom();
+        // var selector = document.getElementById('addNewQuestionButton');
+        // selector.selectedIndex = 0;
+        // document.getElementById("customQuestionText").value = "";
+        // document.getElementById("customQuestionText").placeholder = "Type custom question here";
+        // document.getElementById("questionsDropdown").style.display = "flex";
+        // document.getElementById("customQuestion").style.display = "none";
+    }
+
+    public customQuestionChange = (event: any) => {
+        this.setState({ customQuestionValue: event.target.value });
     }
 
     public resetForm = () => {
@@ -47,6 +72,35 @@ class AddLocationWindow extends React.Component {
 
     public geolocate = () => {
         // console.log('in geolocate function');
+    }
+
+    public renderdrop() {
+        return (
+            <div className="input-group" id='questionsDropdown' ref={this.questionsDropdown}>
+                <select className="custom-select" onChange={this.selectQuestion} id="addNewQuestionButton" aria-label="Select Questions to Ask">
+                    <option value="0">Choose...</option>
+                    <option value="1">Is this a fair price?</option>
+                    <option value="2">Is this a safe area?</option>
+                    <option value="3">How is the commute to the office?</option>
+                    <option value="4" >Custom</option>
+                </select>
+                <div className="input-group-append">
+                    <button className="btn btn-outline-secondary" type="button" onClick={this.addQuestionToList} >Add Question</button>
+                </div>
+            </div>
+        )
+    }
+
+    public renderCustomQuestion() {
+        return (
+            <div className="input-group" id='customQuestion'>
+                <input id='customQuestionText' value={this.state.customQuestionValue} onChange={this.customQuestionChange} className="form-control" placeholder="Type custom question here" type="text" />
+                <div className="input-group-append">
+                    <button className="btn btn-outline-secondary" type="button" onClick={this.cancelCustom}>Cancel</button>
+                    <button className="btn btn-outline-secondary" type="button" onClick={this.addQuestionToList}>Add</button>
+                </div>
+            </div>
+        )
     }
 
     public render() {
@@ -95,25 +149,8 @@ class AddLocationWindow extends React.Component {
                                     <div>
                                         <label htmlFor="addNewQuestionButton">Additional Questions</label>
                                     </div>
-                                    <div className="input-group" id='questionsDropdown'>
-                                        <select className="custom-select" onChange={this.selectQuestion} id="addNewQuestionButton" aria-label="Select Questions to Ask">
-                                            <option value="0">Choose...</option>
-                                            <option value="1">Is this a fair price?</option>
-                                            <option value="2">Is this a safe area?</option>
-                                            <option value="3">How is the commute to the office?</option>
-                                            <option value="4" >Custom</option>
-                                        </select>
-                                        <div className="input-group-append">
-                                            <button className="btn btn-outline-secondary" type="button" onClick={this.addQuestionToList} >Add Question</button>
-                                        </div>
-                                    </div>
-                                    <div className="input-group" id='customQuestion'>
-                                        <input id='customQuestionText' className="form-control" placeholder="Type custom question here" type="textbox" />
-                                        <div className="input-group-append">
-                                            <button className="btn btn-outline-secondary" type="button" onClick={this.cancelCustom}>Cancel</button>
-                                            <button className="btn btn-outline-secondary" type="button" onClick={this.addQuestionToList}>Add</button>
-                                        </div>
-                                    </div>
+                                    {!this.state.showCustom && this.renderdrop()}
+                                    {this.state.showCustom && this.renderCustomQuestion() }
                                 </div>
                                 <ul className="list-group" id='selectedQuestions' />
                             </form>
