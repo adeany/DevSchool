@@ -33,6 +33,7 @@ class Map extends React.Component<MapProps, MapState> {
         this.setState({ markers: existingMarkers, center: newMarker});
     }
 
+    // TODO: WHEN MARKER CLICKED, DISPLAY SURVEY
     markerClicked = (event: any) => {
         console.log('marker was clicked');
         // TODO: INVOKE THIS FUNCTION WHEN PLACE ADDED
