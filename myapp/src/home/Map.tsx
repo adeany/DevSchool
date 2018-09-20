@@ -1,27 +1,33 @@
 import * as React from 'react';
-import { GoogleMap, withGoogleMap } from 'react-google-maps';
+import { GoogleMap, Marker, withGoogleMap } from 'react-google-maps';
 
 class Map extends React.Component {
 
-    constructor(props:any) {
+    constructor(props: any) {
         super(props);
+    }
+
+    markerClicked = (event:any) => {
+        console.log('marker was clicked');
     }
 
     public render() {
 
-        const GoogleMapExample = withGoogleMap(props => (
-            <GoogleMap
-                defaultCenter={{ lat: 40.756795, lng: -73.954298 }}
-                defaultZoom={8}
-            />
-        ));
+        const AppMap = withGoogleMap(props =>
+            <GoogleMap defaultZoom={8} defaultCenter={{ lat: 40.756795, lng: -73.954298 }} >
+                <Marker position={{ lat: 40.756795, lng: -73.954298 }} onClick={this.markerClicked} />
+            </GoogleMap>
+        );
+
+        <AppMap containerElement={<div style={{ height: `400px` }} />}
+            mapElement={<div style={{ height: `100%` }} />}
+        />
 
         return (
             <div>
-                <GoogleMapExample
-                    containerElement={<div style={{ height: `500px`, width: '100%' }} />}
-                    mapElement={<div style={{ height: `100%` }} />}
-                />
+                <AppMap containerElement={<div style={{ height: `500px`, width: '100%' }} />}
+                    mapElement={<div style={{ height: `100%` }} />} >
+                </AppMap>>
             </div>
         );
     }
