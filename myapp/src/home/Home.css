@@ -16,12 +16,12 @@
 
 .container #addButton {
     position: absolute; 
-    top: 2.7%;
-    right: 6%;
+    top: 13px;
+    right: 78px;
     z-index: 2;
 }
 
-.container #map {
+Map {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -29,9 +29,7 @@
 }
 
 .container .jumbotron {
-    position: absolute;
-    top: 111%;
-    width: 100%;
+    margin-top: 30px;
 }
 
 #getStarted {
@@ -55,6 +53,7 @@
     margin-top: 20px; 
 }
 
-#customQuestion {
-    display: none;
+.questionLabel {
+    float: left;
 }
+

@@ -2,18 +2,25 @@ import * as React from 'react';
 import AddressAutocomplete from './AddressAutocomplete';
 import './Home.css';
 
-
-class AddLocationWindow extends React.Component {
+interface AddLocationProps { };
+interface AddLocationState { dropdownValue: string, dropdownQuestion: string, customQuestionText: string, showCustom: boolean, selectedQuestionsLI: Array<any> };
+class AddLocationWindow extends React.Component<AddLocationProps, AddLocationState> {
 
     public questionStyle = {
         marginBottom: '10px',
         marginTop: '15px',
     };
 
+    public questionsDropdown: any = React.createRef();
+
     constructor(props: any) {
         super(props);
         this.state = {
-            value: '0'
+            dropdownValue: '0',
+            dropdownQuestion: "",
+            customQuestionText: "",
+            showCustom: false,
+            selectedQuestionsLI: [],
         };
 
         this.submitLocation = this.submitLocation.bind(this);
@@ -25,30 +32,79 @@ class AddLocationWindow extends React.Component {
     }
 
     public submitLocation = () => {
-        // console.log('in submit location function');
+
     }
 
     public selectQuestion = (event: any) => {
-        if (event && event.target) {
-            this.setState({ value: event.target.value });
+        let v = event.target.value;
+        this.setState({
+            dropdownValue: event.target.value, dropdownQuestion: event.target.options[event.target.selectedIndex].text
+        })
+        if (v == "4") {
+            this.setState({ showCustom: true });
         }
-        // console.log('in submit question function');
     }
 
     public addQuestionToList = () => {
-        // console.log('in add question function');
+        let updatedSelectedQuestions = this.state.selectedQuestionsLI;
+        let question = this.state.dropdownQuestion;
+        if (this.state.dropdownValue === "4") {
+            question = this.state.customQuestionText;
+        }
+        if (this.state.dropdownValue != "0") {
+            updatedSelectedQuestions.push(<li key={this.state.dropdownValue} className="list-group-item">{question}</li>)
+            this.setState({ selectedQuestionsLI: updatedSelectedQuestions })
+            this.cancelCustom();
+        }
     }
 
     public cancelCustom = () => {
-        // console.log('in cancel custom function');
+        this.setState({ showCustom: false, customQuestionText: "" });
+    }
+
+    public customQuestionChange = (event: any) => {
+        this.setState({ customQuestionText: event.target.value });
     }
 
     public resetForm = () => {
+        this.cancelCustom(); 
+        let resetSelectedQuestions = this.state.selectedQuestionsLI
+        resetSelectedQuestions.splice(0,resetSelectedQuestions.length); 
+        this.setState({selectedQuestionsLI: resetSelectedQuestions});
         // console.log('in resetForm function');
     }
 
     public geolocate = () => {
         // console.log('in geolocate function');
+    }
+
+    public renderdrop() {
+        return (
+            <div className="input-group" id='questionsDropdown' ref={this.questionsDropdown}>
+                <select className="custom-select" onChange={this.selectQuestion} id="addNewQuestionButton" aria-label="Select Questions to Ask">
+                    <option value="0">Choose...</option>
+                    <option value="1">Is this a fair price?</option>
+                    <option value="2">Is this a safe area?</option>
+                    <option value="3">How is the commute to the office?</option>
+                    <option value="4" >Custom</option>
+                </select>
+                <div className="input-group-append">
+                    <button className="btn btn-outline-secondary" type="button" onClick={this.addQuestionToList} >Add Question</button>
+                </div>
+            </div>
+        )
+    }
+
+    public renderCustomQuestion() {
+        return (
+            <div className="input-group" id='customQuestion'>
+                <input id='customQuestionText' value={this.state.customQuestionText} onChange={this.customQuestionChange} className="form-control" placeholder="Type custom question here" type="text" />
+                <div className="input-group-append">
+                    <button className="btn btn-outline-secondary" type="button" onClick={this.cancelCustom}>Cancel</button>
+                    <button className="btn btn-outline-secondary" type="button" onClick={this.addQuestionToList}>Add</button>
+                </div>
+            </div>
+        )
     }
 
     public render() {
@@ -59,21 +115,21 @@ class AddLocationWindow extends React.Component {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="addModalLabel">Add Location</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" onClick={this.resetForm} className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
                             <form>
                                 <div id="locationField" className="form-group">
-                                    <label htmlFor='inputAddress'>Address</label>
+                                    <label htmlFor='inputAddress' >Address</label>
                                     <AddressAutocomplete />
                                     <small id="locateHelp" className="form-text text-muted">Location that you wish to request feedback on</small>
                                 </div>
 
                                 {/* Ratings to add to the survey */}
                                 <div>
-                                    <label htmlFor="checkRatingsLabel">Ratings Requested</label>
+                                    <label htmlFor="checkRatingsLabel" className="questionLabel">Ratings Requested</label>
                                 </div>
                                 <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
@@ -97,27 +153,10 @@ class AddLocationWindow extends React.Component {
                                     <div>
                                         <label htmlFor="addNewQuestionButton">Additional Questions</label>
                                     </div>
-                                    <div className="input-group" id='questionsDropdown'>
-                                        <select className="custom-select" onChange={this.selectQuestion} id="addNewQuestionButton" aria-label="Select Questions to Ask">
-                                            <option value="0">Choose...</option>
-                                            <option value="1">Is this a fair price?</option>
-                                            <option value="2">Is this a safe area?</option>
-                                            <option value="3">How is the commute to the office?</option>
-                                            <option value="4" >Custom</option>
-                                        </select>
-                                        <div className="input-group-append">
-                                            <button className="btn btn-outline-secondary" type="button" onClick={this.addQuestionToList} >Add Question</button>
-                                        </div>
-                                    </div>
-                                    <div className="input-group" id='customQuestion'>
-                                        <input id='customQuestionText' className="form-control" placeholder="Type custom question here" type="textbox" />
-                                        <div className="input-group-append">
-                                            <button className="btn btn-outline-secondary" type="button" onClick={this.cancelCustom}>Cancel</button>
-                                            <button className="btn btn-outline-secondary" type="button" onClick={this.addQuestionToList}>Add</button>
-                                        </div>
-                                    </div>
+                                    {!this.state.showCustom && this.renderdrop()}
+                                    {this.state.showCustom && this.renderCustomQuestion()}
                                 </div>
-                                <ul className="list-group" id='selectedQuestions' />
+                                <ul className="list-group" id='selectedQuestions'>{this.state.selectedQuestionsLI}</ul>
                             </form>
                         </div>
                         <div className="modal-footer">
