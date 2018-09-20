@@ -37,7 +37,7 @@ Map {
 }
 
 #locationSurvey {
-    display: none;
+    float: left;
 }
 
 .comment-btn {
@@ -53,7 +53,4 @@ Map {
     margin-top: 20px; 
 }
 
-.questionLabel {
-    float: left;
-}
 

@@ -3,7 +3,7 @@ import AddressAutocomplete from './AddressAutocomplete';
 import './Home.css';
 
 interface AddLocationProps { locationDataSubmitted: Function}; 
-interface AddLocationState { dropdownValue: string, dropdownQuestion: string, customQuestionText: string, showCustom: boolean, selectedQuestionsLI: Array<any>, selectedQuestions: Array<any> };
+interface AddLocationState { dropdownValue: string, dropdownQuestion: string, customQuestionText: string, showCustom: boolean, selectedQuestionsLI: Array<any>, selectedQuestions: Array<any>, address: string };
 class AddLocationWindow extends React.Component<AddLocationProps, AddLocationState> {
 
     public questionStyle = {
@@ -22,6 +22,7 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
             showCustom: false,
             selectedQuestions: [],
             selectedQuestionsLI: [],
+            address: "",
         };
 
         this.submitLocation = this.submitLocation.bind(this);
@@ -33,7 +34,8 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
     }
 
     public submitLocation = () => {
-        this.props.locationDataSubmitted({additionalQuestions: this.state.selectedQuestions});
+        this.props.locationDataSubmitted({additionalQuestions: this.state.selectedQuestions, });
+        //this.resetForm();
     }
 
     public selectQuestion = (event: any) => {
@@ -68,6 +70,10 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
 
     public customQuestionChange = (event: any) => {
         this.setState({ customQuestionText: event.target.value });
+    }
+
+    public addressChange = (event: any) => {
+        this.setState({ address: event.target.value });
     }
 
     public resetForm = () => {

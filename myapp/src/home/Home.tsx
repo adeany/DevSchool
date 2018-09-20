@@ -11,7 +11,7 @@ class Home extends React.Component<HomeProps, HomeState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      surveyData: {}
+      surveyData: {additionalQuestions: [], address: ""}
     }
   }
 
