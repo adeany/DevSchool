@@ -1,5 +1,7 @@
 import * as React from 'react';
+import AddressAutocomplete from './AddressAutocomplete';
 import './Home.css';
+
 
 class AddLocationWindow extends React.Component {
 
@@ -11,7 +13,7 @@ class AddLocationWindow extends React.Component {
     constructor(props: any) {
         super(props);
         this.state = {
-            value: '0',
+            value: '0'
         };
 
         this.submitLocation = this.submitLocation.bind(this);
@@ -50,6 +52,7 @@ class AddLocationWindow extends React.Component {
     }
 
     public render() {
+
         return (
             <div className="modal fade" id="addModal" tabIndex={-1} role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
@@ -64,8 +67,7 @@ class AddLocationWindow extends React.Component {
                             <form>
                                 <div id="locationField" className="form-group">
                                     <label htmlFor='inputAddress'>Address</label>
-                                    <input id="autocomplete" className="form-control" placeholder="Start typing address" onFocus={this.geolocate}
-                                        type="textbox" />
+                                    <AddressAutocomplete />
                                     <small id="locateHelp" className="form-text text-muted">Location that you wish to request feedback on</small>
                                 </div>
 
