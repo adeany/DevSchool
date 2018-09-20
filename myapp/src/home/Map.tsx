@@ -7,10 +7,6 @@ class Map extends React.Component {
         super(props);
     }
 
-    componentWillMount = () => {
-
-    }
-
     public render() {
 
         const GoogleMapExample = withGoogleMap(props => (
@@ -22,7 +18,7 @@ class Map extends React.Component {
 
         return (
             <div>
-                <GoogleMapExample 
+                <GoogleMapExample
                     containerElement={<div style={{ height: `500px`, width: '100%' }} />}
                     mapElement={<div style={{ height: `100%` }} />}
                 />
