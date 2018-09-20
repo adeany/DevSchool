@@ -11,6 +11,7 @@ interface AddressState {
 }
 
 interface AddressProps {
+    addressChange: Function
 }
 
 class AddressAutocomplete extends React.Component<AddressProps, AddressState> {
@@ -29,7 +30,7 @@ class AddressAutocomplete extends React.Component<AddressProps, AddressState> {
 
     public addressChanged = (event: any) => {
         this.setState({ addressText: event.target.value });
-        console.log("address: ", event.target.value); 
+        this.props.addressChange(event.target.value);
     }
 
     componentDidMount() {
@@ -52,6 +53,11 @@ class AddressAutocomplete extends React.Component<AddressProps, AddressState> {
                 place_id: place.place_id,
                 place_location: location.toString(),
             });
+
+            this.props.addressChange(this.state.place_formatted);
+
+
+
 
             // bring the selected place in view on the map
             // map.fitBounds(place.geometry.viewport);

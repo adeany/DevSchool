@@ -34,7 +34,7 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
     }
 
     public submitLocation = () => {
-        this.props.locationDataSubmitted({additionalQuestions: this.state.selectedQuestions, });
+        this.props.locationDataSubmitted({additionalQuestions: this.state.selectedQuestions, address: this.state.address });
         //this.resetForm();
     }
 
@@ -72,8 +72,8 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
         this.setState({ customQuestionText: event.target.value });
     }
 
-    public addressChange = (event: any) => {
-        this.setState({ address: event.target.value });
+    public addressChange = (address:any) => {
+        this.setState({ address: address });
     }
 
     public resetForm = () => {
@@ -136,7 +136,7 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
                             <form>
                                 <div id="locationField" className="form-group">
                                     <label htmlFor='inputAddress' >Address</label>
-                                    <AddressAutocomplete />
+                                    <AddressAutocomplete addressChange={this.addressChange} />
                                     <small id="locateHelp" className="form-text text-muted">Location that you wish to request feedback on</small>
                                 </div>
 
