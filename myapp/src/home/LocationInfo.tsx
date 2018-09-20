@@ -2,10 +2,15 @@ import * as React from 'react';
 import './Home.css';
 import Map from './Map';
 
-class LocationInfo extends React.Component {
+interface LocationInfoProps { surveyData: Object}; 
+class LocationInfo extends React.Component<LocationInfoProps>{
 
     constructor(props: any) {
         super(props);
+    }
+
+    public testing = () => {
+        console.log(this.props.surveyData); 
     }
 
     public render() {
@@ -27,7 +32,7 @@ class LocationInfo extends React.Component {
                             <input type="text" className="form-control" placeholder="Comment goes here..."
                                 aria-describedby="button-addon2" id="newComment" />
                             <div className="input-group-append">
-                                <button className="btn btn-outline-primary" type="button" id="commentBtn">Comment</button>
+                                <button className="btn btn-outline-primary" type="button" id="commentBtn" onClick={this.testing}>Comment</button>
                             </div>
                         </div>
                     </div>
