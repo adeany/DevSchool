@@ -35,6 +35,7 @@ class Map extends React.Component<MapProps, MapState> {
 
     markerClicked = (event: any) => {
         console.log('marker was clicked');
+        // TODO: INVOKE THIS FUNCTION WHEN PLACE ADDED
         // TODO: PUSH REAL LAT AND LNG VALUES
         this.markerAdded(60, -96);
     }
