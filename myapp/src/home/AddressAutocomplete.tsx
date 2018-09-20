@@ -7,6 +7,7 @@ interface AddressState {
     place_formatted: string,
     place_id: string,
     place_location: string,
+    addressText: string
 }
 
 interface AddressProps {
@@ -22,7 +23,13 @@ class AddressAutocomplete extends React.Component<AddressProps, AddressState> {
             place_formatted: '',
             place_id: '',
             place_location: '',
+            addressText: ""
         };
+    }
+
+    public addressChanged = (event: any) => {
+        this.setState({ addressText: event.target.value });
+        console.log("address: ", event.target.value); 
     }
 
     componentDidMount() {
@@ -71,7 +78,7 @@ class AddressAutocomplete extends React.Component<AddressProps, AddressState> {
                     <p>Location: {this.state.place_location}</p>
                 </div> */}
                 <div id='container'>
-                    <input id="autocomplete" type='textbox' className="form-control" placeholder="Enter a location" /> 
+                    <input id="autocomplete" type='textbox' className="form-control" onChange={this.addressChanged} placeholder="Enter a location" /> 
                 </div>
             </div>
         );
