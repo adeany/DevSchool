@@ -14,7 +14,7 @@ class LocationInfo extends React.Component {
                 <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#addModal"
                     id='addButton'> Add Location
         </button>
-                <div id="map" />
+                {/* <div id="map" /> */}
                 <Map/>
                 <div className='jumbotron'>
                     <h3 className="display-6">Share Your Thoughts!</h3>

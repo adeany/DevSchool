@@ -2,7 +2,7 @@ import * as React from 'react';
 import './Home.css';
 
 interface AddLocationProps { };
-interface AddLocationState { dropdownValue: string, dropdownQuestion: string, customQuestionText: string, showCustom: boolean, selectedQuestions: Array<any> };
+interface AddLocationState { dropdownValue: string, dropdownQuestion: string, customQuestionText: string, showCustom: boolean, selectedQuestionsLI: Array<any> };
 class AddLocationWindow extends React.Component<AddLocationProps, AddLocationState> {
 
     public questionStyle = {
@@ -19,7 +19,7 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
             dropdownQuestion: "",
             customQuestionText: "",
             showCustom: false,
-            selectedQuestions: [],
+            selectedQuestionsLI: [],
         };
 
         this.submitLocation = this.submitLocation.bind(this);
@@ -31,7 +31,7 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
     }
 
     public submitLocation = () => {
-        // console.log('in submit location function');
+
     }
 
     public selectQuestion = (event: any) => {
@@ -45,14 +45,14 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
     }
 
     public addQuestionToList = () => {
-        let updatedSelectedQuestions = this.state.selectedQuestions;
+        let updatedSelectedQuestions = this.state.selectedQuestionsLI;
         let question = this.state.dropdownQuestion;
         if (this.state.dropdownValue === "4") {
             question = this.state.customQuestionText;
         }
         if (this.state.dropdownValue != "0") {
             updatedSelectedQuestions.push(<li key={this.state.dropdownValue} className="list-group-item">{question}</li>)
-            this.setState({ selectedQuestions: updatedSelectedQuestions })
+            this.setState({ selectedQuestionsLI: updatedSelectedQuestions })
             this.cancelCustom();
         }
     }
@@ -66,6 +66,10 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
     }
 
     public resetForm = () => {
+        this.cancelCustom(); 
+        let resetSelectedQuestions = this.state.selectedQuestionsLI
+        resetSelectedQuestions.splice(0,resetSelectedQuestions.length); 
+        this.setState({selectedQuestionsLI: resetSelectedQuestions});
         // console.log('in resetForm function');
     }
 
@@ -109,14 +113,14 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="addModalLabel">Add Location</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" onClick={this.resetForm} className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
                             <form>
                                 <div id="locationField" className="form-group">
-                                    <label htmlFor='inputAddress'>Address</label>
+                                    <label htmlFor='inputAddress' className="questionLabel">Address</label>
                                     <input id="autocomplete" className="form-control" placeholder="Start typing address" onFocus={this.geolocate}
                                         type="textbox" />
                                     <small id="locateHelp" className="form-text text-muted">Location that you wish to request feedback on</small>
@@ -124,7 +128,7 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
 
                                 {/* Ratings to add to the survey */}
                                 <div>
-                                    <label htmlFor="checkRatingsLabel">Ratings Requested</label>
+                                    <label htmlFor="checkRatingsLabel" className="questionLabel">Ratings Requested</label>
                                 </div>
                                 <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
@@ -151,7 +155,7 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
                                     {!this.state.showCustom && this.renderdrop()}
                                     {this.state.showCustom && this.renderCustomQuestion()}
                                 </div>
-                                <ul className="list-group" id='selectedQuestions'>{this.state.selectedQuestions}</ul>
+                                <ul className="list-group" id='selectedQuestions'>{this.state.selectedQuestionsLI}</ul>
                             </form>
                         </div>
                         <div className="modal-footer">
