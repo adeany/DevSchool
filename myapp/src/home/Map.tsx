@@ -7,6 +7,7 @@ interface MapProps {
 
 interface MapState {
     markers: Array<any>,
+    center: any,
 }
 
 class Map extends React.Component<MapProps, MapState> {
@@ -15,38 +16,39 @@ class Map extends React.Component<MapProps, MapState> {
         super(props);
 
         this.state = {
+            center: { lat: 40.756795, lng: -73.954298 },
+            // TODO: DUMMY DATA
             markers: [
                 { lat: 55.56, lng: -90.78 },
-                { lat: 46.67, lng: -80.87 }
+                { lat: 46.67, lng: -80.87 },
+                { lat: 40.756795, lng: -73.954298 }
             ],
         }
     }
 
     markerAdded = (lat:any, lng: any) => {
         const existingMarkers = this.state.markers;
-        existingMarkers.push({ lat: lat, lng: lng });
-        this.setState({ markers: existingMarkers });
+        const newMarker = { lat: lat, lng: lng };
+        existingMarkers.push(newMarker);
+        this.setState({ markers: existingMarkers, center: newMarker});
     }
 
     markerClicked = (event: any) => {
         console.log('marker was clicked');
+        // TODO: PUSH REAL LAT AND LNG VALUES
         this.markerAdded(60, -96);
     }
 
     public render() {
 
         const AppMap = withGoogleMap(props =>
-            <GoogleMap defaultZoom={8} defaultCenter={{ lat: 40.756795, lng: -73.954298 }} >
+            <GoogleMap defaultZoom={8} center={this.state.center} >
                 {this.state.markers.map((marker: any) => {
                     return (
-                        <Marker
-                            position={marker}
-                            title="Click to zoom"
-                            onClick={this.markerClicked}
+                        <Marker position={marker} title="Click to zoom" onClick={this.markerClicked}
                         />
                     )
                 })}
-                {/* <Marker position={{ lat: 40.756795, lng: -73.954298 }} onClick={this.markerClicked} /> */}
             </GoogleMap>
         );
 
