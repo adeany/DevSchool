@@ -2,8 +2,8 @@ import * as React from 'react';
 import AddressAutocomplete from './AddressAutocomplete';
 import './Home.css';
 
-interface AddLocationProps { };
-interface AddLocationState { dropdownValue: string, dropdownQuestion: string, customQuestionText: string, showCustom: boolean, selectedQuestionsLI: Array<any> };
+interface AddLocationProps { locationDataSubmitted: Function}; 
+interface AddLocationState { dropdownValue: string, dropdownQuestion: string, customQuestionText: string, showCustom: boolean, selectedQuestionsLI: Array<any>, selectedQuestions: Array<any> };
 class AddLocationWindow extends React.Component<AddLocationProps, AddLocationState> {
 
     public questionStyle = {
@@ -20,6 +20,7 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
             dropdownQuestion: "",
             customQuestionText: "",
             showCustom: false,
+            selectedQuestions: [],
             selectedQuestionsLI: [],
         };
 
@@ -32,7 +33,7 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
     }
 
     public submitLocation = () => {
-
+        this.props.locationDataSubmitted({additionalQuestions: this.state.selectedQuestions});
     }
 
     public selectQuestion = (event: any) => {
@@ -46,16 +47,19 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
     }
 
     public addQuestionToList = () => {
-        let updatedSelectedQuestions = this.state.selectedQuestionsLI;
+        let updatedSelectedQuestionsLI = this.state.selectedQuestionsLI;
+        let updatedSelectedQuestions = this.state.selectedQuestions;
         let question = this.state.dropdownQuestion;
         if (this.state.dropdownValue === "4") {
             question = this.state.customQuestionText;
         }
         if (this.state.dropdownValue != "0") {
-            updatedSelectedQuestions.push(<li key={this.state.dropdownValue} className="list-group-item">{question}</li>)
-            this.setState({ selectedQuestionsLI: updatedSelectedQuestions })
+            updatedSelectedQuestionsLI.push(<li key={this.state.dropdownValue} className="list-group-item">{question}</li>)
+            updatedSelectedQuestions.push(question);
+            this.setState({ selectedQuestionsLI: updatedSelectedQuestionsLI, selectedQuestions: updatedSelectedQuestions })
             this.cancelCustom();
         }
+        console.log("selected questions: ", this.state.selectedQuestions);
     }
 
     public cancelCustom = () => {
@@ -68,9 +72,12 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
 
     public resetForm = () => {
         this.cancelCustom(); 
-        let resetSelectedQuestions = this.state.selectedQuestionsLI
+        let resetSelectedQuestionsLI = this.state.selectedQuestionsLI
+        resetSelectedQuestionsLI.splice(0,resetSelectedQuestionsLI.length); 
+        let resetSelectedQuestions = this.state.selectedQuestions
         resetSelectedQuestions.splice(0,resetSelectedQuestions.length); 
-        this.setState({selectedQuestionsLI: resetSelectedQuestions});
+        this.setState({selectedQuestions: resetSelectedQuestions});
+        this.setState({selectedQuestionsLI: resetSelectedQuestionsLI});
         // console.log('in resetForm function');
     }
 
@@ -156,6 +163,7 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
                                     {!this.state.showCustom && this.renderdrop()}
                                     {this.state.showCustom && this.renderCustomQuestion()}
                                 </div>
+                                {/* <div>{this.state.selectedQuestions}</div> */}
                                 <ul className="list-group" id='selectedQuestions'>{this.state.selectedQuestionsLI}</ul>
                             </form>
                         </div>
