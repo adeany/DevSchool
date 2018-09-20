@@ -30,7 +30,6 @@ class AddressAutocomplete extends React.Component<AddressProps, AddressState> {
 
     public addressChanged = (event: any) => {
         this.setState({ addressText: event.target.value });
-        this.props.addressChange(event.target.value);
     }
 
     componentDidMount() {
@@ -53,8 +52,7 @@ class AddressAutocomplete extends React.Component<AddressProps, AddressState> {
                 place_id: place.place_id,
                 place_location: location.toString(),
             });
-
-            this.props.addressChange(this.state.place_formatted);
+            this.props.addressChange(this.state.place_location);
 
 
 
