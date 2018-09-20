@@ -40,7 +40,7 @@ class LocationInfo extends React.Component<LocationInfoProps>{
                     id='addButton'> Add Location
         </button>
                 {/* <div id="map" /> */}
-                <Map />
+                <Map address={this.props.surveyData['address']}/>
                 <div className='jumbotron'>
                     <h3 className="display-6">Share Your Thoughts!</h3>
                     <p className="lead" id='getStarted'>Click on a red marker to get started.</p>

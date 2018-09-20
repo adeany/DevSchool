@@ -3,7 +3,7 @@ import AddressAutocomplete from './AddressAutocomplete';
 import './Home.css';
 
 interface AddLocationProps { locationDataSubmitted: Function}; 
-interface AddLocationState { dropdownValue: string, dropdownQuestion: string, customQuestionText: string, showCustom: boolean, selectedQuestionsLI: Array<any>, selectedQuestions: Array<any>, address: string };
+interface AddLocationState { dropdownValue: string, dropdownQuestion: string, customQuestionText: string, showCustom: boolean, selectedQuestionsLI: Array<any>, selectedQuestions: Array<any>, address: any };
 class AddLocationWindow extends React.Component<AddLocationProps, AddLocationState> {
 
     public questionStyle = {
@@ -22,7 +22,7 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
             showCustom: false,
             selectedQuestions: [],
             selectedQuestionsLI: [],
-            address: "",
+            address: {},
         };
 
         this.submitLocation = this.submitLocation.bind(this);
@@ -73,7 +73,15 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
     }
 
     public addressChange = (address:any) => {
-        this.setState({ address: address });
+        console.log("address: ", address);
+        address = address.split(", "); 
+        console.log("address: ", address); 
+
+        let lat = address[0].substr(1, address[0].length);
+        let lng = address[1].substr(0, (address[1].length)-1); 
+        console.log("address: ", lat); 
+        console.log("address: ", lng); 
+        this.setState({ address: {lat: parseInt(lat), lng: parseInt(lng) }});
     }
 
     public resetForm = () => {
