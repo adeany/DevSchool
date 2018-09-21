@@ -46,7 +46,13 @@ Map {
 }
 
 .commentsGroup {
-    margin-top: 15px;
+    margin-top: 20px;
+    width:100%;
+}
+
+.commentColor {
+    background-color: #EDFDFE;
+    text-align: left;
 }
 
 #selectedQuestions {
@@ -60,4 +66,7 @@ Map {
     margin-bottom: 20px;
 }
 
+#commentInput {
+    padding-top: 5px; 
+}
 

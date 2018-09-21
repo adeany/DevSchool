@@ -3,14 +3,46 @@ import './Home.css';
 import Map from './Map';
 
 interface LocationInfoProps { surveyData: Object, showSurvey: boolean };
-class LocationInfo extends React.Component<LocationInfoProps>{
+interface LocationInfoState { commentText: string, addedComments: Array<Object> };
+
+class LocationInfo extends React.Component<LocationInfoProps, LocationInfoState>{
 
     constructor(props: any) {
         super(props);
+
+        this.state = {
+            commentText: '',
+            addedComments: [],
+        }
+
+        this.addComment = this.addComment.bind(this);
+        this.getComments = this.getComments.bind(this);
     }
 
-    public testing = () => {
-        console.log(this.props.surveyData);
+    public getComments = (currentQuestion: string) => {
+        var comments: any = [];
+        this.state.addedComments.forEach((entry: Object) => {
+            if (entry['question'] === currentQuestion) {
+                comments.push(
+                    <li className='list-group-item form-control commentColor'>{entry['comment']}</li>
+                );
+            }
+        });
+        return comments;
+    }
+
+    public commentChanged = (event: any) => {
+        this.setState({ commentText: event.target.value });
+    }
+
+    public addComment = (currentQuestion: string) => {
+        var commentText: string = this.state.commentText;
+        if (commentText) {
+            var newComment: Object = { question: currentQuestion, comment: commentText };
+            var comments = this.state.addedComments;
+            comments.push(newComment);
+            this.setState({ addedComments: comments, commentText: '' });
+        }
     }
 
     public renderRatings() {
@@ -57,12 +89,13 @@ class LocationInfo extends React.Component<LocationInfoProps>{
             console.log("question: ", question);
             surveyQuestions.push(<div id="markerInfo" className="container" >
                 <p className="lead" id='locationSurvey'>{question}</p>
-                <ul id="comments" className="list-group commentsGroup" />
-                <div className="input-group mb-3">
+                <br/>
+                <ul id="comments" className="list-group commentsGroup">{this.getComments(question)}</ul>
+                <div className="input-group mb-3" id="commentInput">
                     <input type="text" className="form-control" placeholder="Comment goes here..."
-                        aria-describedby="button-addon2" id="newComment" />
+                        aria-describedby="button-addon2" onChange={this.commentChanged} id="newComment" />
                     <div className="input-group-append">
-                        <button className="btn btn-outline-primary" type="button" id="commentBtn" onClick={this.testing}>Comment</button>
+                        <button className="btn btn-outline-primary" type="button" id="commentBtn" onClick={event => this.addComment(question)}>Comment</button>
                     </div>
                 </div>
             </div>)
