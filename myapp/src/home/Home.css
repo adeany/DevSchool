@@ -52,6 +52,7 @@ Map {
 
 .commentColor {
     background-color: #EDFDFE;
+    text-align: left;
 }
 
 #selectedQuestions {
