@@ -53,4 +53,11 @@ Map {
     margin-top: 20px; 
 }
 
+#rating {
+    width: 100%;
+    text-align: left;
+    padding-left: 15px;
+    margin-bottom: 20px;
+}
+
 

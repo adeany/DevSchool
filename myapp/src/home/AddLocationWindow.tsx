@@ -3,7 +3,7 @@ import AddressAutocomplete from './AddressAutocomplete';
 import './Home.css';
 
 interface AddLocationProps { locationDataSubmitted: Function}; 
-interface AddLocationState { dropdownValue: string, dropdownQuestion: string, customQuestionText: string, showCustom: boolean, selectedQuestionsLI: Array<any>, selectedQuestions: Array<any>, address: any };
+interface AddLocationState { dropdownValue: string, dropdownQuestion: string, customQuestionText: string, showCustom: boolean, selectedQuestionsLI: Array<any>, selectedQuestions: Array<any>, address: any, selectedRatings: Array<boolean> };
 class AddLocationWindow extends React.Component<AddLocationProps, AddLocationState> {
 
     public questionStyle = {
@@ -23,6 +23,7 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
             selectedQuestions: [],
             selectedQuestionsLI: [],
             address: {},
+            selectedRatings: [false, false, false, false]
         };
 
         this.submitLocation = this.submitLocation.bind(this);
@@ -34,7 +35,7 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
     }
 
     public submitLocation = () => {
-        this.props.locationDataSubmitted({additionalQuestions: this.state.selectedQuestions, address: this.state.address });
+        this.props.locationDataSubmitted({additionalQuestions: this.state.selectedQuestions, address: this.state.address, ratings: this.state.selectedRatings });
         //this.resetForm();
     }
 
@@ -81,7 +82,7 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
         let lng = address[1].substr(0, (address[1].length)-1); 
         console.log("address: ", lat); 
         console.log("address: ", lng); 
-        this.setState({ address: {lat: parseInt(lat), lng: parseInt(lng) }});
+        this.setState({ address: {lat: parseFloat(lat), lng: parseFloat(lng) }});
     }
 
     public resetForm = () => {
@@ -97,6 +98,13 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
 
     public geolocate = () => {
         // console.log('in geolocate function');
+    }
+
+    public ratingChange = (event:any) => {
+        let value = parseInt(event.target.value); 
+        let updatedSelectedRatings = this.state.selectedRatings; 
+        updatedSelectedRatings[value] = true; 
+        this.setState({selectedRatings: updatedSelectedRatings}); 
     }
 
     public renderdrop() {
@@ -153,19 +161,19 @@ class AddLocationWindow extends React.Component<AddLocationProps, AddLocationSta
                                     <label htmlFor="checkRatingsLabel" className="questionLabel">Ratings Requested</label>
                                 </div>
                                 <div className="form-check form-check-inline">
-                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
+                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="0" onChange={this.ratingChange} />
                                     <label className="form-check-label" htmlFor="inlineCheckbox1">Safety</label>
                                 </div>
                                 <div className="form-check form-check-inline">
-                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option2" />
+                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="1" onChange={this.ratingChange}/>
                                     <label className="form-check-label" htmlFor="inlineCheckbox2">Neighborhood</label>
                                 </div>
                                 <div className="form-check form-check-inline">
-                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="option3" />
+                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="2" onChange={this.ratingChange} />
                                     <label className="form-check-label" htmlFor="inlineCheckbox3">Price</label>
                                 </div>
                                 <div className="form-check form-check-inline">
-                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="option4" />
+                                    <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="3"onChange={this.ratingChange} />
                                     <label className="form-check-label" htmlFor="inlineCheckbox4">Ease of Commute</label>
                                 </div>
                                 {/* </div> */}

@@ -47,7 +47,7 @@ class Map extends React.Component<MapProps, MapState> {
         console.log('marker was clicked');
         // TODO: INVOKE THIS FUNCTION WHEN PLACE ADDED
         // TODO: PUSH REAL LAT AND LNG VALUES
-        this.markerAdded(60, -96);
+        // this.markerAdded(60, -96);
     }
 
     public render() {
