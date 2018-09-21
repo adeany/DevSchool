@@ -50,6 +50,10 @@ Map {
     width:100%;
 }
 
+.commentColor {
+    background-color: #EDFDFE;
+}
+
 #selectedQuestions {
     margin-top: 20px; 
 }

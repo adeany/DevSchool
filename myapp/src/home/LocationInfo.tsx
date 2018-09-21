@@ -24,7 +24,7 @@ class LocationInfo extends React.Component<LocationInfoProps, LocationInfoState>
         this.state.addedComments.forEach((entry: Object) => {
             if (entry['question'] === currentQuestion) {
                 comments.push(
-                    <li className='list-group-item form-control'>{entry['comment']}</li>
+                    <li className='list-group-item form-control commentColor'>{entry['comment']}</li>
                 );
             }
         });
